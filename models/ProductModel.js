@@ -45,12 +45,19 @@ const Product = mongoose.model("Product", productSchema);
 
 const CategoryAnalysis = async () => {
   let pipeline = [
-    {
-      $group: {
+      {
+        $group: {
         _id: "$category",
         totalProducts: { $sum: 1 },
+        }
       },
-    },
+      {
+        $project: {
+          _id: 0,
+          category: "$_id",
+          totalProducts: 1
+        }
+      }
   ];
   return await Product.aggregate(pipeline);
 };
@@ -66,6 +73,15 @@ const ProductAnalysis = async () => {
         totalStock: { $sum: "$variants.stock" },
       },
     },
+    {
+      $project: {
+        _id: 0,
+        category: "$_id",
+        totalVariant: 1,
+        averagePrice: 1,
+        totalStock: 1,
+      }
+    }
   ];
   return await Product.aggregate(pipeline);
 };
