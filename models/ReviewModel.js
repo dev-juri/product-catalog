@@ -21,6 +21,12 @@ const reviewSchema = new Schema(
       default: () => new Types.ObjectId(),
       index: true,
     },
+    customerName: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 1,
+    },
   },
   { timestamps: true }
 );

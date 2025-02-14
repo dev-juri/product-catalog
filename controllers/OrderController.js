@@ -1,5 +1,4 @@
 var Order = require("../models/OrderModel");
-var productController = require("../controllers/ProductController");
 
 const placeOrder = async (req, res, next) => {
   try {

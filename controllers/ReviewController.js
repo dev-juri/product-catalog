@@ -3,7 +3,7 @@ var productController = require("../controllers/ProductController");
 
 const addReview = async (req, res, next) => {
   try {
-    const { productId, review, rating, customerId } = req.body;
+    const { productId, review, rating, customerId, customerName } = req.body;
 
     var product = productController.getProductAvailability(productId);
     if (!product) {
@@ -12,7 +12,7 @@ const addReview = async (req, res, next) => {
         .json({ status: false, error: "Product not found" });
     }
 
-    var newReview = new Review({ productId, review, rating });
+    var newReview = new Review({ productId, review, rating, customerName });
 
     if (customerId) {
       newReview.customerId = customerId;
