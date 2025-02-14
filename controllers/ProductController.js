@@ -58,10 +58,16 @@ const updateProduct = async (req, res, next) => {
     const { _id, name, price, description, inventory, categories, currency } =
       req.body;
 
-    if (!_id && (!name || !price || !description || !inventory || !categories || !currency)) {
-      return res
-        .status(400)
-        .json({ status: false, error: "Bad request" });
+    if (
+      !_id &&
+      (!name ||
+        !price ||
+        !description ||
+        !inventory ||
+        !categories ||
+        !currency)
+    ) {
+      return res.status(400).json({ status: false, error: "Bad request" });
     }
 
     const product = await Product.findById(_id);
@@ -116,7 +122,7 @@ const deleteProduct = async (req, res) => {
 };
 
 const getProductAvailability = async (productId) => {
-    return await Product.findById(productId);
+  return await Product.findById(productId);
 };
 
 module.exports = {

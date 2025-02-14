@@ -14,8 +14,8 @@ const addReview = async (req, res, next) => {
 
     var newReview = new Review({ productId, review, rating });
 
-    if(customerId) {
-        newReview.customerId = customerId
+    if (customerId) {
+      newReview.customerId = customerId;
     }
 
     const savedReview = await newReview.save();
@@ -84,30 +84,25 @@ const updateReview = async (req, res, next) => {
     const { _id, review, rating } = req.body;
 
     if (!_id && (!review || !rating)) {
-        return res
-          .status(400)
-          .json({ status: false, error: "Bad Request" });
-      }
+      return res.status(400).json({ status: false, error: "Bad Request" });
+    }
 
-      const _review = await Review.findById(_id);
-      if (!_review) {
-        return res
-          .status(404)
-          .json({ status: false, error: "Review not found" });
-      }
-  
-      const updatedReview = await Review.findByIdAndUpdate(
-        _id,
-        { $set: { review, rating } },
-        { new: true, runValidators: true }
-      );
-  
-      res.json({
-        status: true,
-        message: "Review updated successfully",
-        data: updatedReview,
-      });
+    const _review = await Review.findById(_id);
+    if (!_review) {
+      return res.status(404).json({ status: false, error: "Review not found" });
+    }
 
+    const updatedReview = await Review.findByIdAndUpdate(
+      _id,
+      { $set: { review, rating } },
+      { new: true, runValidators: true }
+    );
+
+    res.json({
+      status: true,
+      message: "Review updated successfully",
+      data: updatedReview,
+    });
   } catch (error) {
     next(error);
   }
@@ -126,9 +121,7 @@ const deleteReview = async (req, res, next) => {
     const review = await Review.findById(reviewId);
 
     if (!reviewId) {
-      return res
-        .status(404)
-        .json({ status: false, error: "Review not found" });
+      return res.status(404).json({ status: false, error: "Review not found" });
     }
 
     await Review.findByIdAndDelete(reviewId);

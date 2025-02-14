@@ -43,10 +43,12 @@ app.use((err, req, res, next) => {
 
   if (err.name === "ValidationError") {
     const errors = Object.values(err.errors).map((e) => e.message);
-    return res.status(400).json({ status: false, error: errors[0]});
+    return res.status(400).json({ status: false, error: errors[0] });
   }
 
-  res.status(err.status || 500).json({ status: false, error: err.message || "Internal Server Error" });
+  res
+    .status(err.status || 500)
+    .json({ status: false, error: err.message || "Internal Server Error" });
 });
 
 module.exports = app;

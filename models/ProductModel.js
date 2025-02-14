@@ -32,7 +32,7 @@ const productSchema = new Schema(
         message: "At least one category is required",
       },
       index: true,
-    },    
+    },
     currency: {
       type: String,
       enum: ["USD", "NGN", "KHS", "AUD", "CAD"],
