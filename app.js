@@ -37,13 +37,16 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// error handler
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  res.status(err.status || 500);
-  res.json({status: false, error: "API Error: Path doesn't exist"});
+  if (err.name === "ValidationError") {
+    const errors = Object.values(err.errors).map((e) => e.message);
+    return res.status(400).json({ status: false, error: errors[0]});
+  }
+
+  res.status(err.status || 500).json({ status: false, error: err.message || "Internal Server Error" });
 });
 
 module.exports = app;
