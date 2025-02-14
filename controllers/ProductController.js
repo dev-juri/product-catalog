@@ -1,17 +1,17 @@
-const Product = require("../models/ProductModel");
+const {
+  Product,
+  ProductAnalysis,
+  CategoryAnalysis,
+} = require("../models/ProductModel");
 
 const addProduct = async (req, res, next) => {
   try {
-    const { name, price, description, inventory, categories, currency } =
-      req.body;
+    const { name, variants, category } = req.body;
 
     const newProduct = new Product({
       name,
-      price: price * 100,
-      description,
-      inventory,
-      categories,
-      currency,
+      variants,
+      category,
     });
 
     const savedProduct = await newProduct.save();
@@ -29,7 +29,7 @@ const fetchProducts = async (req, res, next) => {
   try {
     const data = await Product.find();
 
-    return res.json({ status: true, message: "Products retrieved", data });
+    return res.json({ status: true, message: "Products retrieved", data});
   } catch (error) {
     next(error);
   }
@@ -55,18 +55,9 @@ const getProduct = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
   try {
-    const { _id, name, price, description, inventory, categories, currency } =
-      req.body;
+    const { _id, name, variants, category } = req.body;
 
-    if (
-      !_id &&
-      (!name ||
-        !price ||
-        !description ||
-        !inventory ||
-        !categories ||
-        !currency)
-    ) {
+    if (!_id && (!name || !variants || !category)) {
       return res.status(400).json({ status: false, error: "Bad request" });
     }
 
@@ -79,7 +70,7 @@ const updateProduct = async (req, res, next) => {
 
     const updatedProduct = await Product.findByIdAndUpdate(
       _id,
-      { $set: { name, price, description, inventory, categories, currency } },
+      { $set: { name, variants, category } },
       { new: true, runValidators: true }
     );
 
@@ -121,6 +112,16 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const productStats = async (req, res) => {
+  let productAnalysis = await ProductAnalysis();
+  return res.status(200).json({status: true, message: "Products' statistics fetched", data: productAnalysis})
+};
+
+const categoryStats = async (req, res) => {
+  let categoryAnalysis = await CategoryAnalysis();
+  return res.status(200).json({status: true, message: "Categories' statistics fetched", data: categoryAnalysis})
+};
+
 const getProductAvailability = async (productId) => {
   return await Product.findById(productId);
 };
@@ -131,5 +132,7 @@ module.exports = {
   getProduct,
   updateProduct,
   deleteProduct,
-  getProductAvailability,
+  productStats,
+  categoryStats,
+  getProductAvailability
 };

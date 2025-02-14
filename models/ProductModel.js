@@ -10,39 +10,65 @@ const productSchema = new Schema(
       trim: true,
       minlength: [1, "Product name cannot be empty"],
     },
-    price: { type: Number, min: 0, required: true },
-    description: {
+    variants: [
+      {
+        description: {
+          type: String,
+          required: true,
+          validate: {
+            validator: function (value) {
+              return value.trim().length > 0;
+            },
+            message: "Description cannot be empty",
+          },
+        },
+        price: { type: Number, min: 0, required: true },
+        stock: { type: Number, min: 0, required: true },
+        currency: {
+          type: String,
+          enum: ["USD", "NGN", "KHS", "AUD", "CAD"],
+          index: true,
+          required: true,
+        }
+      },
+    ],
+    category: {
       type: String,
       required: true,
-      validate: {
-        validator: function (value) {
-          return value.trim().length > 0;
-        },
-        message: "Description cannot be empty",
-      },
-    },
-    inventory: { type: Number, min: 0, required: true },
-    categories: {
-      type: [String],
-      required: [true, "At least one category is required"],
-      validate: {
-        validator: function (arr) {
-          return arr.length > 0;
-        },
-        message: "At least one category is required",
-      },
       index: true,
-    },
-    currency: {
-      type: String,
-      enum: ["USD", "NGN", "KHS", "AUD", "CAD"],
-      index: true,
-      required: true,
-    },
+    }
   },
   { timestamps: true }
 );
 
 const Product = mongoose.model("Product", productSchema);
 
-module.exports = Product;
+const CategoryAnalysis = async () => {
+  let pipeline = [
+    {
+      $group: {
+        _id: "$category",
+        totalProducts: { $sum: 1 },
+      },
+    },
+  ];
+  return await Product.aggregate(pipeline);
+};
+
+const ProductAnalysis = async () => {
+  let pipeline = [
+    { $unwind: "$variants" },
+    {
+      $group: {
+        _id: "$category",
+        totalVariant: { $sum: 1 },
+        averagePrice: { $avg: "$variants.price" },
+        totalStock: { $sum: "$variants.stock" },
+      },
+    },
+  ];
+  return await Product.aggregate(pipeline);
+};
+
+
+module.exports = { Product, CategoryAnalysis, ProductAnalysis };

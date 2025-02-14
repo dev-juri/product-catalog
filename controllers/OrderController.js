@@ -3,16 +3,9 @@ var productController = require("../controllers/ProductController");
 
 const placeOrder = async (req, res, next) => {
   try {
-    const { productId, quantity, customerId } = req.body;
-    var product = productController.getProductAvailability(productId);
-    if (!product) {
-      return res
-        .status(400)
-        .json({ status: false, error: "Product not found" });
-    }
+    const { products, totalAmount, customerId } = req.body;
 
-    var newOrder = new Order({ productId, quantity });
-    newOrder.price = product.price;
+    var newOrder = new Order({ products, totalAmount, customerId });
 
     if (customerId) {
       newOrder.customerId = customerId;
@@ -42,31 +35,11 @@ const getCustomerOrders = async (req, res, next) => {
   }
 };
 
-const getProductOrders = async (req, res, next) => {
-  try {
-    const { productId } = req.params;
-
-    var product = productController.getProductAvailability(productId);
-    if (!product) {
-      return res
-        .status(400)
-        .json({ status: false, error: "Product not found" });
-    }
-
-    var data = await Order.find({ productId });
-    return res
-      .status(200)
-      .json({ status: true, message: "Product's orders retrived", data });
-  } catch (error) {
-    next(error);
-  }
-};
-
 const updateOrder = async (req, res, next) => {
   try {
-    const { _id, quantity, price, status } = req.body;
+    const { _id, products, totalAmount, status } = req.body;
 
-    if (!_id && (!quantity || !price || !status)) {
+    if (!_id && (!products || !totalAmount || !status)) {
       return res.status(400).json({ status: false, error: "Bad Request" });
     }
 
@@ -77,7 +50,7 @@ const updateOrder = async (req, res, next) => {
 
     const updatedOrder = await Order.findByIdAndUpdate(
       _id,
-      { $set: { quantity, price, status } },
+      { $set: { products, totalAmount, status } },
       { new: true, runValidators: true }
     );
 
@@ -94,6 +67,5 @@ const updateOrder = async (req, res, next) => {
 module.exports = {
   placeOrder,
   getCustomerOrders,
-  getProductOrders,
   updateOrder,
 };

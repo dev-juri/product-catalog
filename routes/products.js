@@ -2,6 +2,10 @@ var express = require("express");
 var router = express.Router();
 var productController = require("../controllers/ProductController");
 
+router.get('/product-analysis', productController.productStats);
+
+router.get('/category-analysis', productController.categoryStats)
+
 router.get("/", productController.fetchProducts);
 
 router.get("/:productId", productController.getProduct);
