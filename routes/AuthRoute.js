@@ -4,8 +4,7 @@ const { loginUser, refreshToken } = require("../controllers/AuthController");
 const {
   validateLoginPayload,
   validateRefreshPayload,
-} = require("../middlewares/payloadMiddleware");
-
+} = require("../middlewares/PayloadMiddleware");
 
 /**
  * @openapi
@@ -55,9 +54,31 @@ const {
  *                       type: string
  *                       description: The refresh token for obtaining a new access token.
  *       400:
- *         description: Bad request, missing or invalid fields.
+ *         description: Bad request - Missing or invalid fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: string
  *       401:
- *         description: Unauthorized, invalid credentials.
+ *         description: Unauthorized - Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: string
  */
 router.post("/", validateLoginPayload, loginUser);
 
@@ -102,7 +123,18 @@ router.post("/", validateLoginPayload, loginUser);
  *                       type: string
  *                       description: The access token for authentication.
  *       400:
- *         description: Bad request, missing or invalid fields.
+ *         description: Bad request - Missing or invalid fields
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: boolean
+ *                   example: false
+ *                 error:
+ *                   type: string
+ *                   example: string
  */
 router.post("/refresh-token", validateRefreshPayload, refreshToken);
 
