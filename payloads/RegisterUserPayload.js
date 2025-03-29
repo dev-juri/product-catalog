@@ -22,6 +22,11 @@ const registerUserSchema = {
     required: ["email", "fullName", "password"],
     additionalProperties: false,
     errorMessage: {
+      properties: {
+        email: "Email must be a non-empty string.",
+        fullName: "Full name must be non-empty.",
+        password: "Password must be a non-empty string.",
+      },
       required: {
         email: "Email is required.",
         fullName: "Full name is required.",

@@ -1,18 +1,18 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var mongoose = require("mongoose");
-var dotenv = require("dotenv");
-
-dotenv.config();
+require("dotenv").config();
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const swaggerUi = require("swagger-ui-express");
 
 var authRouter = require("./routes/auth");
 var userRouter = require("./routes/user");
 var productsRouter = require("./routes/products");
 var reviewsRouter = require("./routes/reviews");
 var ordersRouter = require("./routes/orders");
+const swaggerJSDoc = require("swagger-jsdoc");
 
 var app = express();
 
@@ -30,6 +30,29 @@ mongoose
   .then(() => console.log(">> Connected to MongoDB"))
   .catch((err) => console.error(">> MongoDB Connection Error:", err));
 
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Product Catalog API",
+      description: "API documentation for the Product Catalog application",
+      version: "1.0.0",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000/api",
+      },
+    ],
+  },
+  apis: ["./routes/*.js", "./models/*.js"], 
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+app.use("/api/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// App's routes
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productsRouter);
@@ -54,5 +77,10 @@ app.use((err, req, res, next) => {
     .status(err.status || 500)
     .json({ status: false, error: err.message || "Internal Server Error" });
 });
+
+process.on("SIGINT", () => {
+  process.exit(0);
+});
+
 
 module.exports = app;

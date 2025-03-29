@@ -1,31 +1,26 @@
 const Ajv = require("ajv");
 const addErrors = require("ajv-errors");
-const registerUserSchema = require("../payloads/RegisterUserPayload");
+const refreshSchema = require("../payloads/RefreshTokenPayload");
 const loginSchema = require("../payloads/LoginPayload");
+const registerSchema = require("../payloads/RegisterUserPayload");
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addErrors(ajv);
 
-const validateRegistrationPayload = (req, res, next) => {
-  const validate = ajv.compile(registerUserSchema);
-  const valid = validate(req.body);
+const createValidationMiddleware = (schema) => {
+  return (req, res, next) => {
+    const validate = ajv.compile(schema);
+    const valid = validate(req.body);
 
-  if (!valid) {
-    throw new Error(validate.errors[0].message, { status: 400 });
-  }
+    if (!valid) {
+      throw new Error(validate.errors[0].message, { status: 400 });
+    }
 
-  next();
+    next();
+  };
 };
 
-const validateLoginPayload = (req, res, next) => {
-  const validate = ajv.compile(loginSchema);
-  const valid = validate(req.body);
-
-  if (!valid) {
-    throw new Error(validate.errors[0].message, { status: 400 });
-  }
-
-  next();
-};
-
-module.exports = { validateRegistrationPayload, validateLoginPayload };
+exports.validateRegistrationPayload =
+  createValidationMiddleware(registerSchema);
+exports.validateLoginPayload = createValidationMiddleware(loginSchema);
+exports.validateRefreshPayload = createValidationMiddleware(refreshSchema);
