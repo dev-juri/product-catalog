@@ -13,7 +13,7 @@ const createValidationMiddleware = (schema) => {
     const valid = validate(req.body);
 
     if (!valid) {
-      throw new Error(validate.errors[0].message, { status: 400 });
+      return res.status(400).json({ status: false, error: validate.errors[0].message });
     }
 
     next();

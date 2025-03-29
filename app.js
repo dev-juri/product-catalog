@@ -7,11 +7,11 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const swaggerUi = require("swagger-ui-express");
 
-var authRouter = require("./routes/auth");
-var userRouter = require("./routes/user");
-var productsRouter = require("./routes/products");
-var reviewsRouter = require("./routes/reviews");
-var ordersRouter = require("./routes/orders");
+var authRouter = require("./routes/AuthRoute");
+var userRouter = require("./routes/UsersRoute");
+var productsRouter = require("./routes/ProductsRoute");
+var reviewsRouter = require("./routes/ReviewsRoute");
+var ordersRouter = require("./routes/OrdersRoute");
 const swaggerJSDoc = require("swagger-jsdoc");
 
 var app = express();

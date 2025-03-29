@@ -39,5 +39,10 @@ const reviewSchema = new Schema(
   { timestamps: true }
 );
 
+reviewSchema.pre("init", function (doc) {
+  delete doc.__v;
+});
+
+
 const Review = mongoose.model("Review", reviewSchema);
 module.exports = Review;

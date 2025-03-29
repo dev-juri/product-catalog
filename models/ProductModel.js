@@ -45,6 +45,10 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
+productSchema.pre("init", function (doc) {
+  delete doc.__v;
+});
+
 const Product = mongoose.model("Product", productSchema);
 
 const CategoryAnalysis = async () => {

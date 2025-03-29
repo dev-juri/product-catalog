@@ -1,4 +1,4 @@
-const { User } = require("../models/UserModel");
+const User = require("../models/UserModel");
 const bcrypt = require("bcryptjs");
 const { generateToken, verifyToken } = require("../jwt/JwtHelper");
 
@@ -57,7 +57,7 @@ const refreshToken = async (req, res, next) => {
         .json({ status: false, error: "Invalid accessToken" });
     }
 
-    let user = User.findById({ id: jwtUser.id });
+    let user = User.findById({ id: jwtUser.id }).select("+password");
     const token = generateToken(user, false);
 
     return res.status(200).json({

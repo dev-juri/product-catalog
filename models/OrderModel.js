@@ -30,5 +30,9 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
+orderSchema.pre("init", function (doc) {
+  delete doc.__v;
+});
+
 const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;

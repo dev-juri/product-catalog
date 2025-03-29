@@ -13,6 +13,7 @@ const addProduct = async (req, res, next) => {
       name,
       variants,
       category,
+      seller: req.user
     });
 
     const savedProduct = await newProduct.save();

@@ -21,12 +21,17 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
+      select: false,
     },
   },
   {
     timestamps: true,
   }
 );
+
+userSchema.pre("init", function (doc) {
+  delete doc.__v;
+});
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -42,4 +47,4 @@ userSchema.pre("save", async function (next) {
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = { User };
+module.exports = User;
