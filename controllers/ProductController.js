@@ -3,6 +3,7 @@ const {
   ProductAnalysis,
   CategoryAnalysis,
 } = require("../models/ProductModel");
+const { User } = require("../models/UserModel");
 
 const addProduct = async (req, res, next) => {
   try {

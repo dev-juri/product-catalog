@@ -8,6 +8,8 @@ var dotenv = require("dotenv");
 
 dotenv.config();
 
+var authRouter = require("./routes/auth");
+var userRouter = require("./routes/user");
 var productsRouter = require("./routes/products");
 var reviewsRouter = require("./routes/reviews");
 var ordersRouter = require("./routes/orders");
@@ -25,9 +27,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+  .then(() => console.log(">> Connected to MongoDB"))
+  .catch((err) => console.error(">> MongoDB Connection Error:", err));
 
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/reviews", reviewsRouter);
 app.use("/api/orders", ordersRouter);
