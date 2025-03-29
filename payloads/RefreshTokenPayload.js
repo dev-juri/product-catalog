@@ -9,10 +9,10 @@ const refreshSchema = {
   additionalProperties: false,
   errorMessage: {
     properties: {
-      refreshToken: "Access token must be a non-empty string.",
+      refreshToken: "Refresh token must be a non-empty string.",
     },
     required: {
-      refreshToken: "Access token is required.",
+      refreshToken: "Refresh token is required.",
     },
     additionalProperties: "Extra properties are not allowed.",
   },
