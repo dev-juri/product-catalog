@@ -22,7 +22,6 @@ const loginUser = async (req, res, next) => {
     return res.status(401).json({status: false, error: "Invalid login credentials"});
   }
 
-  console.log(jwtConfig)
   // Generate JWT token
   const accessToken = jwt.sign({
       id: user._id,
