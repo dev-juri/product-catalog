@@ -30,7 +30,6 @@ mongoose
   .then(() => console.log(">> Connected to MongoDB"))
   .catch((err) => console.error(">> MongoDB Connection Error:", err));
 
-
 const options = {
   definition: {
     openapi: "3.0.4",
@@ -45,7 +44,7 @@ const options = {
       },
     ],
   },
-  apis: ["./routes/*.js", "./models/*.js"], 
+  apis: ["./routes/*.js", "./models/*.js"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -81,6 +80,5 @@ app.use((err, req, res, next) => {
 process.on("SIGINT", () => {
   process.exit(0);
 });
-
 
 module.exports = app;

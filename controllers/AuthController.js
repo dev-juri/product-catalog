@@ -6,7 +6,7 @@ const loginUser = async (req, res, next) => {
   try {
     let user = null;
     // Find user in the DB
-    user = await User.findOne({ email: req.body.email });
+    user = await User.findOne({ email: req.body.email }).select("+password");
 
     if (!user) {
       return res
@@ -30,6 +30,9 @@ const loginUser = async (req, res, next) => {
     const accessToken = generateToken(user, false);
     const refreshToken = generateToken(user, true);
 
+    // Save refresh token in DB
+    await User.findByIdAndUpdate(user._id, { refreshToken }, { new: true });
+
     // Return
     return res.status(200).json({
       status: true,
@@ -52,12 +55,19 @@ const refreshToken = async (req, res, next) => {
     const jwtUser = verifyToken(refreshToken);
 
     if (!jwtUser) {
-      return res
-        .status(401)
-        .json({ status: false, error: "Invalid accessToken" });
+      return res.status(401).json({ status: false, error: "Invalid token" });
     }
 
-    let user = User.findById({ id: jwtUser.id }).select("+password");
+    let user = await User.findById(jwtUser.id).select("+refreshToken").exec();
+
+    // Check validity of refresh token
+    if (user.refreshToken != refreshToken) {
+      return res
+        .status(401)
+        .json({ status: false, error: "Session Expired, please login" });
+    }
+
+    // Generate new accessToken if refresh token is valid
     const token = generateToken(user, false);
 
     return res.status(200).json({

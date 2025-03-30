@@ -1,13 +1,15 @@
 var express = require("express");
 var router = express.Router();
-const { registerUser } = require("../controllers/UserController");
+const { registerUser, updateUserDetails, deleteUser } = require("../controllers/UserController");
 const {
   validateRegistrationPayload,
+  validateUpdatePayload,
 } = require("../middlewares/PayloadMiddleware");
+const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware");
 
 /**
- * @openapi
- * /register:
+ * @swagger
+ * /users/register:
  *   post:
  *     summary: Register a new user
  *     description: Creates a new user account
@@ -65,18 +67,70 @@ const {
  *                   example: string
  *       409:
  *         description: Conflict - Email already exists
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: string
- *                   example: string
  */
 router.post("/register", validateRegistrationPayload, registerUser);
+
+/**
+ * @swagger
+ * /users/update:
+ *   patch:
+ *     summary: Update user
+ *     description: Update an existing user's details
+ *     security:
+ *       - BearerAuth: []
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer Token for authentication
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: "Bearer your_access_token_here"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - fullName
+ *             properties:
+ *               fullName:
+ *                 type: string
+ *                 description: User's full name
+ *                 example: "John Doe"
+ *     responses:
+ *       200:
+ *         description: User account updated successfully
+ */
+router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUserDetails);
+
+/**
+ * @swagger
+ * /users/delete:
+ *   delete:
+ *     summary: Delete user account
+ *     description: Permanently deletes the authenticated user's account.
+ *     security:
+ *       - BearerAuth: []
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Bearer Token for authentication
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: "Bearer your_access_token_here"
+ *     responses:
+ *       200:
+ *         description: User account deleted successfully
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ */
+router.delete("/delete", isAuthenticatedUser, deleteUser);
 
 module.exports = router;

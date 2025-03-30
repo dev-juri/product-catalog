@@ -16,7 +16,7 @@ const isAuthenticatedUser = async (req, res, next) => {
     }
 
     const jwtUser = verifyToken(token);
-  
+
     if (!jwtUser) {
       return res.status(401).json({ status: false, error: "Invalid token" });
     }
@@ -25,7 +25,7 @@ const isAuthenticatedUser = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ status: false, error: "User not found" });
     }
-    
+
     req.user = user;
 
     next();

@@ -30,7 +30,7 @@ const productSchema = new Schema(
           enum: ["USD", "NGN", "KHS", "AUD", "CAD"],
           index: true,
           required: true,
-        }
+        },
       },
     ],
     category: {
@@ -39,8 +39,10 @@ const productSchema = new Schema(
       index: true,
     },
     seller: {
-      type: Schema.Types.ObjectId, ref: "User", required: true,
-    }
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -53,19 +55,19 @@ const Product = mongoose.model("Product", productSchema);
 
 const CategoryAnalysis = async () => {
   let pipeline = [
-      {
-        $group: {
+    {
+      $group: {
         _id: "$category",
         totalProducts: { $sum: 1 },
-        }
       },
-      {
-        $project: {
-          _id: 0,
-          category: "$_id",
-          totalProducts: 1
-        }
-      }
+    },
+    {
+      $project: {
+        _id: 0,
+        category: "$_id",
+        totalProducts: 1,
+      },
+    },
   ];
   return await Product.aggregate(pipeline);
 };
@@ -88,11 +90,10 @@ const ProductAnalysis = async () => {
         totalVariant: 1,
         averagePrice: 1,
         totalStock: 1,
-      }
-    }
+      },
+    },
   ];
   return await Product.aggregate(pipeline);
 };
-
 
 module.exports = { Product, CategoryAnalysis, ProductAnalysis };

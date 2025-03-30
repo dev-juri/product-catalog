@@ -7,7 +7,7 @@ const {
 } = require("../middlewares/PayloadMiddleware");
 
 /**
- * @openapi
+ * @swagger
  * /auth:
  *   post:
  *     summary: User login
@@ -83,7 +83,7 @@ const {
 router.post("/", validateLoginPayload, loginUser);
 
 /**
- * @openapi
+ * @swagger
  * /auth/refresh-token:
  *   post:
  *     summary: Refresh access token
