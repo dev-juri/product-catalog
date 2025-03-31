@@ -4,7 +4,6 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const mongoose = require("mongoose");
 const swaggerUi = require("swagger-ui-express");
 
 var authRouter = require("./routes/AuthRoute");
@@ -12,7 +11,8 @@ var userRouter = require("./routes/UsersRoute");
 var productsRouter = require("./routes/ProductsRoute");
 var reviewsRouter = require("./routes/ReviewsRoute");
 var ordersRouter = require("./routes/OrdersRoute");
-const swaggerJSDoc = require("swagger-jsdoc");
+const { connectDB } = require("./config/database");
+const { swaggerSpec } = require("./config/SwaggerConfig");
 
 var app = express();
 
@@ -25,29 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log(">> Connected to MongoDB"))
-  .catch((err) => console.error(">> MongoDB Connection Error:", err));
-
-const options = {
-  definition: {
-    openapi: "3.0.4",
-    info: {
-      title: "Product Catalog API",
-      description: "API documentation for the Product Catalog application",
-      version: "1.0.0",
-    },
-    servers: [
-      {
-        url: "http://localhost:3000/api",
-      },
-    ],
-  },
-  apis: ["./routes/*.js"],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
+// Connect to Database
+connectDB();
 
 app.use("/api/doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
