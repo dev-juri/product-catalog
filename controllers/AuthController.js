@@ -58,7 +58,13 @@ const refreshToken = async (req, res, next) => {
       return res.status(401).json({ status: false, error: "Invalid token" });
     }
 
-    let user = await User.findById(jwtUser.id).select("+refreshToken").exec();
+    let user = await User.findById(jwtUser.id).select("+refreshToken");
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: false, error: "User not found" });
+    }
 
     // Check validity of refresh token
     if (user.refreshToken != refreshToken) {
