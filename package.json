@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node --watch ./bin/www",
-    "test": "jest --watchAll --no-cache --detectOpenHandles"
+    "test": "jest --watchAll --no-cache --detectOpenHandles",
+    "test:coverage": "jest --coverage"
   },
   "jest": {
   "testTimeout": 30000,
