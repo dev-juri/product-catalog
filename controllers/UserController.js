@@ -25,37 +25,30 @@ const registerUser = async (req, res, next) => {
 };
 
 const updateUserDetails = async (req, res, next) => {
-  // Check if user exists in the db
-  let user = await User.findById(req.user._id);
-
-  if (!user) {
-    return res.status(404).json({ status: false, error: "User not found" });
-  }
-
-  // Update user details
-  let updatedUser = await User.findByIdAndUpdate(user._id, req.body, {
+  let user = await User.findByIdAndUpdate(req.user._id, req.body, {
     new: true,
   });
 
-  return res
-    .status(200)
-    .json({
-      status: true,
-      message: "User successfully updated",
-      data: updatedUser,
-    });
+  if (!user) {
+    return res.status(404).json({ status: false, error: "User not found" });
+  }
+
+  return res.status(200).json({
+    status: true,
+    message: "User successfully updated",
+    data: user,
+  });
 };
 
 const deleteUser = async (req, res, next) => {
-  // Check if user exists in the db
-  let user = await User.findById(req.user._id);
+  let user = await User.findByIdAndUpdate(req.user._id, {
+    deletedAt: new Date(),
+  });
 
   if (!user) {
     return res.status(404).json({ status: false, error: "User not found" });
   }
 
-  // Soft delete user
-  await User.findByIdAndUpdate(user._id, { deletedAt: new Date() });
   return res.status(200).json({
     status: true,
     message: "User successfully deleted",

@@ -70,16 +70,19 @@ describe("Unit tests for User Controller", () => {
     });
 
     it("should return 404 if user doesn't exist", async () => {
-      User.findById.mockResolvedValueOnce(null);
+      User.findByIdAndUpdate.mockResolvedValueOnce(null);
 
       await userController.updateUserDetails(req, res, next);
-      expect(User.findById).toHaveBeenCalledWith(req.user._id);
+      expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
+        req.user._id,
+        req.body,
+        { new: true }
+      );
       expect(res.status).toHaveBeenCalledWith(404);
     });
 
     it("should return 200 if update was successful", async () => {
       req.body = { fullName: "Jamie Doe" };
-      User.findById.mockResolvedValueOnce(mockUser);
       User.findByIdAndUpdate.mockResolvedValueOnce({
         ...mockUser,
         fullName: req.body.fullName,
@@ -87,7 +90,6 @@ describe("Unit tests for User Controller", () => {
 
       await userController.updateUserDetails(req, res, next);
 
-      expect(User.findById).toHaveBeenCalledWith(req.user._id);
       expect(User.findByIdAndUpdate).toHaveBeenCalledWith(
         req.user._id,
         req.body,
@@ -103,21 +105,19 @@ describe("Unit tests for User Controller", () => {
     });
 
     it("should retun 404 if user doesn't exist", async () => {
-      User.findById.mockResolvedValueOnce(null);
+      User.findByIdAndUpdate.mockResolvedValueOnce(null);
 
       await userController.deleteUser(req, res, next);
 
-      expect(User.findById).toHaveBeenCalledWith(req.user._id);
+      expect(User.findByIdAndUpdate).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(404);
     });
 
     it("should return 200 if user was successfully deleted", async () => {
-      User.findById.mockResolvedValueOnce(mockUser);
       User.findByIdAndUpdate.mockResolvedValueOnce(mockUser);
 
       await userController.deleteUser(req, res, next);
 
-      expect(User.findById).toHaveBeenCalledWith(req.user._id);
       expect(User.findByIdAndUpdate).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
     });
