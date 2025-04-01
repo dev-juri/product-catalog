@@ -15,9 +15,6 @@ const registerUser = async (req, res, next) => {
   let newUser = new User(req.body);
   await newUser.save();
 
-  // return response
-  delete newUser.password;
-
   return res.status(201).json({
     status: true,
     message: "User successfully registered",
