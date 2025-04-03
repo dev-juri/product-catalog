@@ -3,7 +3,7 @@ var router = express.Router();
 const { loginUser, refreshToken } = require("../controllers/AuthController.js");
 const {
   validateLoginPayload,
-  validateRefreshPayload,
+  validateRefreshPayload
 } = require("../middlewares/PayloadMiddleware.js");
 
 /**

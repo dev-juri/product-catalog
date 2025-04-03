@@ -3,7 +3,7 @@ var router = express.Router();
 const { registerUser, updateUserDetails, deleteUser } = require("../controllers/UserController.js");
 const {
   validateRegistrationPayload,
-  validateUpdatePayload,
+  validateUpdatePayload
 } = require("../middlewares/PayloadMiddleware.js");
 const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware.js");
 
