@@ -4,8 +4,8 @@ const { registerUser, updateUserDetails, deleteUser } = require("../controllers/
 const {
   validateRegistrationPayload,
   validateUpdatePayload
-} = require("../middlewares/payloadMiddleware");
-const { isAuthenticatedUser } = require("../middlewares/authenticationMiddleware");
+} = require("../middlewares/payloadValidation.js");
+const { isAuthenticatedUser } = require("../middlewares/bearerAuthentication.js");
 
 /**
  * @swagger
