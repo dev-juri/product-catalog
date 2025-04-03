@@ -4,7 +4,7 @@ const { loginUser, refreshToken } = require("../controllers/AuthController.js");
 const {
   validateLoginPayload,
   validateRefreshPayload
-} = require("../middlewares/PayloadMiddleware.js");
+} = require("../middlewares/payloadMiddleware.js");
 
 /**
  * @swagger
