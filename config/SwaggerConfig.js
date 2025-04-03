@@ -1,5 +1,4 @@
 const swaggerJSDoc = require("swagger-jsdoc");
-require("../payloads/RefreshTokenPayload");
 
 const options = {
   definition: {
