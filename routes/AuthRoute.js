@@ -49,6 +49,12 @@ const {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/GeneralErrorResponse'
+ *       404:
+ *         description: Not found - User with email not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  *       401:
  *         description: Unauthorized - Invalid credentials
  *         content:
