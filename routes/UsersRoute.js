@@ -80,14 +80,6 @@ router.post("/register", validateRegistrationPayload, registerUser);
  *       - BearerAuth: []
  *     tags:
  *       - User
- *     parameters:
- *       - in: header
- *         name: Authorization
- *         description: Bearer Token for authentication
- *         required: true
- *         schema:
- *           type: string
- *           example: "Bearer your_access_token_here"
  *     requestBody:
  *       required: true
  *       content:
@@ -114,17 +106,9 @@ router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUser
  *     summary: Delete user account
  *     description: Deletes the authenticated user's account.
  *     security:
- *       - BearerAuth: []
+ *      - BearerAuth: []
  *     tags:
  *       - User
- *     parameters:
- *       - in: header
- *         name: Authorization
- *         description: Bearer Token for authentication
- *         required: true
- *         schema:
- *           type: string
- *           example: "Bearer your_access_token_here"
  *     responses:
  *       200:
  *         description: User account deleted successfully
