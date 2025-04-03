@@ -2,10 +2,6 @@
   "name": "product-catalog",
   "version": "0.0.0",
   "private": true,
-  "main": "app.js",
-  "engines": {
-    "node": "22.9.0"
-  },
   "scripts": {
     "start:dev": "node --watch ./bin/www",
     "start": "node ./bin/www",
