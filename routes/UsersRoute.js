@@ -20,50 +20,26 @@ const { isAuthenticatedUser } = require("../middlewares/bearerAuthentication.js"
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *               - fullName
- *             properties:
- *               email:
- *                 type: string
- *                 description: User's email address
- *                 example: user@example.com
- *               password:
- *                 type: string
- *                 description: User's password, must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character
- *                 example: "@Strongpassword123"
- *               fullName:
- *                 type: string
- *                 description: User's full name
- *                 example: "John Doe"
+ *             $ref: '#/components/schemas/RegisterUserPayload'
  *     responses:
  *       201:
  *         description: User successfully registered
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: "User successfully registered"
+ *               $ref: '#/components/schemas/GeneralSuccessResponse'
  *       400:
  *         description: Bad request - Missing or invalid fields
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  *       409:
  *         description: Conflict - Email already exists
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  */
 router.post("/register", validateRegistrationPayload, registerUser);
 
@@ -82,17 +58,20 @@ router.post("/register", validateRegistrationPayload, registerUser);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - fullName
- *             properties:
- *               fullName:
- *                 type: string
- *                 description: User's full name
- *                 example: "John Doe"
+ *             $ref: '#/components/schemas/UpdateUserPayload'
  *     responses:
  *       200:
- *         description: User account updated successfully
+ *         description: User account updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UpdateUserResponse'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  */
 router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUserDetails);
 
@@ -109,11 +88,15 @@ router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUser
  *     responses:
  *       200:
  *         description: User account deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/GeneralSuccessResponse'
  *       401:
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  */
 router.delete("/delete", isAuthenticatedUser, deleteUser);
 

@@ -48,13 +48,13 @@ const {
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  *       401:
  *         description: Unauthorized - Invalid credentials
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  */
 router.post("/", validateLoginPayload, loginUser);
 
@@ -71,39 +71,20 @@ router.post("/", validateLoginPayload, loginUser);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - refreshToken
- *             properties:
- *               refreshToken:
- *                 type: string
- *                 description: The user's refreshToken.
+ *             $ref: '#/components/schemas/RefreshTokenPayload'
  *     responses:
  *       200:
  *         description: New accessToken generated.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: "Access token generated successfully"
- *                 data:
- *                   type: object
- *                   properties:
- *                     accessToken:
- *                       type: string
- *                       description: The access token for authentication.
+ *               $ref: '#/components/schemas/RefreshTokenResponse'
  *       400:
  *         description: Bad request - Missing or invalid fields
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *               $ref: '#/components/schemas/GeneralErrorResponse'
  */
 router.post("/refresh-token", validateRefreshPayload, refreshToken);
 
