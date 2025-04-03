@@ -1,4 +1,4 @@
-const User = require("../models/UserModel");
+const User = require("../models/UserModel.js");
 
 const registerUser = async (req, res, next) => {
   let user = null;

@@ -1,6 +1,6 @@
-const User = require("../models/UserModel");
+const User = require("../models/UserModel.js");
 const bcrypt = require("bcryptjs");
-const { generateToken, verifyToken } = require("../jwt/JwtHelper");
+const { generateToken, verifyToken } = require("../jwt/JwtHelper.js");
 
 const loginUser = async (req, res, next) => {
   try {

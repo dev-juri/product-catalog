@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var productController = require("../controllers/ProductController");
-const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware");
+var productController = require("../controllers/ProductController.js");
+const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware.js");
 
 router.get('/product-analysis', productController.productStats);
 

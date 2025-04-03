@@ -6,13 +6,13 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 
-var authRouter = require("./routes/AuthRoute");
-var userRouter = require("./routes/UsersRoute");
-var productsRouter = require("./routes/ProductsRoute");
-var reviewsRouter = require("./routes/ReviewsRoute");
-var ordersRouter = require("./routes/OrdersRoute");
-const { connectDB } = require("./config/database");
-const { swaggerSpec } = require("./config/SwaggerConfig");
+var authRouter = require("./routes/AuthRoute.js");
+var userRouter = require("./routes/UsersRoute.js");
+var productsRouter = require("./routes/ProductsRoute.js");
+var reviewsRouter = require("./routes/ReviewsRoute.js");
+var ordersRouter = require("./routes/OrdersRoute.js");
+const { connectDB } = require("./config/database.js");
+const { swaggerSpec } = require("./config/SwaggerConfig.js");
 
 var app = express();
 

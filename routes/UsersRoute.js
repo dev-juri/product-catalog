@@ -1,11 +1,11 @@
 var express = require("express");
 var router = express.Router();
-const { registerUser, updateUserDetails, deleteUser } = require("../controllers/UserController");
+const { registerUser, updateUserDetails, deleteUser } = require("../controllers/UserController.js");
 const {
   validateRegistrationPayload,
   validateUpdatePayload,
-} = require("../middlewares/PayloadMiddleware");
-const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware");
+} = require("../middlewares/PayloadMiddleware.js");
+const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware.js");
 
 /**
  * @swagger

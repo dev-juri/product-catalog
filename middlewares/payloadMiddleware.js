@@ -1,9 +1,9 @@
 const Ajv = require("ajv");
 const addErrors = require("ajv-errors");
-const refreshSchema = require("../payloads/RefreshTokenPayload");
-const loginSchema = require("../payloads/LoginPayload");
-const registerSchema = require("../payloads/RegisterUserPayload");
-const updateUserSchema = require("../payloads/UpdateUserPayload");
+const refreshSchema = require("../payloads/RefreshTokenPayload.js");
+const loginSchema = require("../payloads/LoginPayload.js");
+const registerSchema = require("../payloads/RegisterUserPayload.js");
+const updateUserSchema = require("../payloads/UpdateUserPayload.js");
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 addErrors(ajv);

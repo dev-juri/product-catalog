@@ -2,8 +2,8 @@ const {
   Product,
   ProductAnalysis,
   CategoryAnalysis,
-} = require("../models/ProductModel");
-const { User } = require("../models/UserModel");
+} = require("../models/ProductModel.js");
+const { User } = require("../models/UserModel.js");
 
 const addProduct = async (req, res, next) => {
   try {

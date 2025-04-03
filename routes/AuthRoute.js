@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const { loginUser, refreshToken } = require("../controllers/AuthController");
+const { loginUser, refreshToken } = require("../controllers/AuthController.js");
 const {
   validateLoginPayload,
   validateRefreshPayload,
-} = require("../middlewares/PayloadMiddleware");
+} = require("../middlewares/PayloadMiddleware.js");
 
 /**
  * @swagger

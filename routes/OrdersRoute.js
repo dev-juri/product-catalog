@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var orderController = require("../controllers/OrderController");
+var orderController = require("../controllers/OrderController.js");
 
 router.post("/", orderController.placeOrder);
 

@@ -1,5 +1,5 @@
-var Review = require("../models/ReviewModel");
-var productController = require("../controllers/ProductController");
+var Review = require("../models/ReviewModel.js");
+var productController = require("../controllers/ProductController.js");
 
 const addReview = async (req, res, next) => {
   try {

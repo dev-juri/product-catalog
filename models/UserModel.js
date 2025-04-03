@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-require("../payloads/RefreshTokenPayload");
 
 const { Schema } = mongoose;
 
