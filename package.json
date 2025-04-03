@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node --watch ./bin/www",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
+    "build": "npm run build",
     "test:coverage": "jest --coverage"
   },
   "jest": {
