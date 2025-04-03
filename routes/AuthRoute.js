@@ -19,17 +19,7 @@ const {
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 description: The user's email address.
- *               password:
- *                 type: string
- *                 description: The user's password.
+ *             $ref: '#/components/schemas/LoginPayload'
  *     responses:
  *       200:
  *         description: Successfully authenticated.
@@ -58,27 +48,13 @@ const {
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: string
- *                   example: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       401:
  *         description: Unauthorized - Invalid credentials
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: string
- *                   example: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/", validateLoginPayload, loginUser);
 
@@ -127,14 +103,7 @@ router.post("/", validateLoginPayload, loginUser);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: string
- *                   example: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/refresh-token", validateRefreshPayload, refreshToken);
 

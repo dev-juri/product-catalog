@@ -57,16 +57,13 @@ const { isAuthenticatedUser } = require("../middlewares/AuthenticationMiddleware
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: boolean
- *                   example: false
- *                 error:
- *                   type: string
- *                   example: string
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       409:
  *         description: Conflict - Email already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post("/register", validateRegistrationPayload, registerUser);
 
@@ -113,7 +110,10 @@ router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUser
  *       200:
  *         description: User account deleted successfully
  *       401:
- *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.delete("/delete", isAuthenticatedUser, deleteUser);
 
