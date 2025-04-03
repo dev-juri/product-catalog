@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start:dev": "node --watch ./bin/www",
-    "start": "node dist/bin/www",
+    "start": "node ./bin/www",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
     "test:coverage": "jest --coverage"
   },
