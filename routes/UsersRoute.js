@@ -112,7 +112,7 @@ router.patch("/update", [validateUpdatePayload, isAuthenticatedUser], updateUser
  * /users/delete:
  *   delete:
  *     summary: Delete user account
- *     description: Permanently deletes the authenticated user's account.
+ *     description: Deletes the authenticated user's account.
  *     security:
  *       - BearerAuth: []
  *     tags:
