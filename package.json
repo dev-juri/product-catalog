@@ -2,9 +2,13 @@
   "name": "product-catalog",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "22.9.0"
+  },
   "scripts": {
     "start:dev": "node --watch ./bin/www",
     "start": "node ./bin/www",
+    "build": "babel src -d dist",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
     "test:coverage": "jest --coverage"
   },
