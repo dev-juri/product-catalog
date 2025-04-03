@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --watch ./bin/www",
+    "start:dev": "node --watch ./bin/www",
+    "start": "node ./bin/www",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "build": "npm run build",
     "test:coverage": "jest --coverage"
   },
   "jest": {
-  "testTimeout": 30000,
-  "detectOpenHandles": true
-},
+    "testTimeout": 30000,
+    "detectOpenHandles": true
+  },
   "dependencies": {
     "ajv": "^8.17.1",
     "ajv-errors": "^3.0.0",
