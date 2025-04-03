@@ -23,8 +23,9 @@ const createValidationMiddleware = (schema) => {
   };
 };
 
-exports.validateRegistrationPayload =
-  createValidationMiddleware(registerSchema);
-exports.validateLoginPayload = createValidationMiddleware(loginSchema);
-exports.validateRefreshPayload = createValidationMiddleware(refreshSchema);
-exports.validateUpdatePayload = createValidationMiddleware(updateUserSchema);
+const validateRegistrationPayload = createValidationMiddleware(registerSchema);
+const validateLoginPayload = createValidationMiddleware(loginSchema);
+const validateRefreshPayload = createValidationMiddleware(refreshSchema);
+const validateUpdatePayload = createValidationMiddleware(updateUserSchema);
+
+module.exports = {validateRegistrationPayload, validateLoginPayload, validateRefreshPayload, validateUpdatePayload}
